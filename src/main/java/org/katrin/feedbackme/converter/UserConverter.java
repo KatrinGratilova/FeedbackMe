@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserConverter {
-    public static UserEntity toEntity(UserDto user){
+    public static UserEntity toEntity(UserDto user) {
         Set<Role> roles = user.getRoles().stream().map(Role::valueOf).collect(Collectors.toSet());
         List<Long> reviewsReceivedDtos = Optional.ofNullable(user.getReviewsReceived()).orElse(new ArrayList<>());
         List<ReviewEntity> reviewsReceivedEntities = reviewsReceivedDtos.stream().map(id -> ReviewEntity.builder().id(id).build()).toList();
@@ -31,7 +31,7 @@ public class UserConverter {
                 .build();
     }
 
-    public static UserDto toDto(UserEntity user){
+    public static UserDto toDto(UserEntity user) {
         return UserDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
