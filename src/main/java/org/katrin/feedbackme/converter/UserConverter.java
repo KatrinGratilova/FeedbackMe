@@ -25,7 +25,7 @@ public class UserConverter {
                 .name(user.getName())
                 .bio(user.getBio())
                 .roles(roles)
-                .avgRating(user.getAvgRating())
+                .avgRating(Optional.ofNullable(user.getAvgRating()).orElse(0.0))
                 .reviewsReceived(reviewsReceivedEntities)
                 .reviewsWritten(reviewsWrittenEntities)
                 .build();
@@ -39,7 +39,7 @@ public class UserConverter {
                 .name(user.getName())
                 .bio(user.getBio())
                 .roles(user.getRoles().stream().map(Role::toString).collect(Collectors.toSet()))
-                .avgRating(user.getAvgRating())
+                .avgRating(Optional.ofNullable(user.getAvgRating()).orElse(0.0))
                 .reviewsReceived(user.getReviewsReceived().stream().map(ReviewEntity::getId).toList())
                 .reviewsWritten(user.getReviewsWritten().stream().map(ReviewEntity::getId).toList())
                 .build();

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.katrin.feedbackme.entity.Role;
 
 import java.util.List;
 import java.util.Set;
