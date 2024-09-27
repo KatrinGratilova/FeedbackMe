@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.katrin.feedbackme.converter.ReviewConverter;
 import org.katrin.feedbackme.dto.ReviewDto;
 import org.katrin.feedbackme.entity.ReviewEntity;
+import org.katrin.feedbackme.entity.UserEntity;
 import org.katrin.feedbackme.repository.Review.ReviewRepository;
+import org.katrin.feedbackme.repository.User.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
 
     public ReviewDto getById(long id) {
         return reviewRepository.findById(id).map(ReviewConverter::toDto).orElseThrow();
@@ -36,6 +39,10 @@ public class ReviewService {
     }
 
     public void deleteReview(long id) {
+        ReviewEntity review = reviewRepository.findById(id).orElseThrow();
+        UserEntity recipient = review.getRecipient();
         reviewRepository.deleteById(id);
+        recipient.recalculateAvgRating();
+        userRepository.save(recipient);
     }
 }
