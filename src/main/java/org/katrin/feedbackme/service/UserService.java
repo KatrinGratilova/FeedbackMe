@@ -50,9 +50,9 @@ public class UserService {
         return UserConverter.toDto(userEntity);
     }
 
-    public UserDto updateWithoutReviews(UserCreateDto userCreateDto) {
+    public UserCreateDto updateWithoutReviews(UserCreateDto userCreateDto) {
         UserEntity userEntity = userRepository.updateWithoutReviews(UserCreateConverter.toEntity(userCreateDto));
-        return UserConverter.toDto(userEntity);
+        return UserCreateConverter.toDto(userEntity);
     }
 
     public void deleteById(Long id) {

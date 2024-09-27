@@ -38,7 +38,7 @@ public class ReviewService {
         return ReviewConverter.toDto(reviewEntity);
     }
 
-    public void deleteReview(long id) {
+    public void deleteById(long id) {
         ReviewEntity review = reviewRepository.findById(id).orElseThrow();
         UserEntity recipient = review.getRecipient();
         reviewRepository.deleteById(id);

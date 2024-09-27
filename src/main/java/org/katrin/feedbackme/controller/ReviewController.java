@@ -33,6 +33,6 @@ public class ReviewController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable long id) {
-        reviewService.deleteReview(id);
+        reviewService.deleteById(id);
     }
 }
