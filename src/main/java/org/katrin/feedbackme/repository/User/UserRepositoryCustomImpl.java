@@ -22,7 +22,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
         UserEntity author = entityManager.find(UserEntity.class, reviewEntity.getAuthor().getId());
         if (author == null)
-            throw new EntityNotFoundException("Author not found for id: " + id);
+            throw new EntityNotFoundException("Author not found for id: " + reviewEntity.getAuthor().getId());
 
         reviewEntity.setRecipient(recipient);
         recipient.getReviewsReceived().add(reviewEntity);
