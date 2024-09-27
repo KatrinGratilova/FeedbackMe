@@ -5,7 +5,7 @@ import org.katrin.feedbackme.entity.ReviewEntity;
 import org.katrin.feedbackme.entity.UserEntity;
 
 public class ReviewConverter {
-    public static ReviewEntity toEntity(ReviewDto review){
+    public static ReviewEntity toEntity(ReviewDto review) {
         return ReviewEntity.builder()
                 .id(review.getId())
                 .comment(review.getComment())
@@ -15,7 +15,7 @@ public class ReviewConverter {
                 .build();
     }
 
-    public static ReviewDto toDto(ReviewEntity review){
+    public static ReviewDto toDto(ReviewEntity review) {
         return ReviewDto.builder()
                 .id(review.getId())
                 .comment(review.getComment())
