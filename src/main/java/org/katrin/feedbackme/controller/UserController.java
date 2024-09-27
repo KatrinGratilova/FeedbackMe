@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.katrin.feedbackme.dto.ReviewDto;
 import org.katrin.feedbackme.dto.UserCreateDto;
 import org.katrin.feedbackme.dto.UserDto;
+import org.katrin.feedbackme.service.ReviewService;
 import org.katrin.feedbackme.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @PostMapping
     public UserCreateDto save(@RequestBody UserCreateDto userCreateDto) {
@@ -38,6 +40,16 @@ public class UserController {
     @PostMapping("/{id}/reviews-received")
     public UserDto addReview(@PathVariable long id, @RequestBody ReviewDto reviewDto) {
         return userService.addReview(id, reviewDto);
+    }
+
+    @GetMapping("/{id}/reviews-received")
+    public List<ReviewDto> getReviewsReceived(@PathVariable long id) {
+        return reviewService.getByRecipientId(id);
+    }
+
+    @GetMapping("/{id}/reviews-written")
+    public List<ReviewDto> getReviewsWritten(@PathVariable long id) {
+        return reviewService.getByAuthorId(id);
     }
 
     @PutMapping
