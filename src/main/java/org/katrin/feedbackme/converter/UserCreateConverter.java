@@ -4,7 +4,7 @@ import org.katrin.feedbackme.dto.UserCreateDto;
 import org.katrin.feedbackme.entity.UserEntity;
 
 public class UserCreateConverter {
-    public static UserEntity toEntity(UserCreateDto user){
+    public static UserEntity toEntity(UserCreateDto user) {
         return UserEntity.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -15,7 +15,7 @@ public class UserCreateConverter {
                 .build();
     }
 
-    public static UserCreateDto toDto(UserEntity user){
+    public static UserCreateDto toDto(UserEntity user) {
         return UserCreateDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
