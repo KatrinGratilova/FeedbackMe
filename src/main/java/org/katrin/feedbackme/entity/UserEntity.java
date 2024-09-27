@@ -2,8 +2,6 @@ package org.katrin.feedbackme.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -16,7 +14,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class UserEntity implements UserDetails {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
@@ -41,7 +39,9 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-    @Column(name = "average_rate", nullable = false)
+    private boolean active;
+
+    @Column(name = "average_rate")
     private Double avgRating = 0.0;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "recipient")
@@ -54,46 +54,12 @@ public class UserEntity implements UserDetails {
     private LocalDateTime createdAt;
 
     @PrePersist
-    public void onCreate(){
+    public void onCreate() {
         createdAt = LocalDateTime.now();
     }
 
     public void recalculateAvgRating() {
         double sum = reviewsReceived.stream().mapToInt(ReviewEntity::getRating).sum();
         this.avgRating = reviewsReceived.isEmpty() ? 0 : sum / (double) reviewsReceived.size();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return active;
-    }
-
-    public boolean isAdmin(){
-        return roles.contains(Role.ROLE_ADMIN);
     }
 }

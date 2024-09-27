@@ -10,6 +10,7 @@ import org.katrin.feedbackme.dto.UserDto;
 import org.katrin.feedbackme.entity.Role;
 import org.katrin.feedbackme.entity.UserEntity;
 import org.katrin.feedbackme.repository.User.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -19,12 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public UserCreateDto save(UserCreateDto userDto) {
         UserEntity userEntity = UserCreateConverter.toEntity(userDto);
         userEntity.setActive(true);
-        //userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setRoles(new HashSet<>());
         userEntity.getRoles().add(Role.ROLE_USER);
         UserEntity saved = userRepository.save(userEntity);
