@@ -32,6 +32,8 @@ public class UserConverter {
     }
 
     public static UserDto toDto(UserEntity user) {
+        List<ReviewEntity> reviewsReceived = Optional.ofNullable(user.getReviewsReceived()).orElse(new ArrayList<>());
+        List<ReviewEntity> reviewsWritten = Optional.ofNullable(user.getReviewsWritten()).orElse(new ArrayList<>());
         return UserDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -40,8 +42,8 @@ public class UserConverter {
                 .bio(user.getBio())
                 .roles(user.getRoles().stream().map(Role::toString).collect(Collectors.toSet()))
                 .avgRating(Optional.ofNullable(user.getAvgRating()).orElse(0.0))
-                .reviewsReceived(user.getReviewsReceived().stream().map(ReviewEntity::getId).toList())
-                .reviewsWritten(user.getReviewsWritten().stream().map(ReviewEntity::getId).toList())
+                .reviewsReceived(reviewsReceived.stream().map(ReviewEntity::getId).toList())
+                .reviewsWritten(reviewsWritten.stream().map(ReviewEntity::getId).toList())
                 .build();
     }
 }

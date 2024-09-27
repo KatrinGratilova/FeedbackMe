@@ -56,7 +56,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping
-    public UserDto updateWithoutReviews(@RequestBody UserCreateDto userCreateDto) {
+    public UserCreateDto updateWithoutReviews(@RequestBody UserCreateDto userCreateDto) {
         return userService.updateWithoutReviews(userCreateDto);
     }
 
