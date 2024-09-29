@@ -1,9 +1,9 @@
 package org.katrin.feedbackme.configuration;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.katrin.feedbackme.entity.UserEntity;
 import org.katrin.feedbackme.repository.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Data
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UsersDetailsService implements UserDetailsService {
+    @Autowired
     private UserRepository userRepository;
 
     @Override

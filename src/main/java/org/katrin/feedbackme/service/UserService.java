@@ -24,7 +24,6 @@ public class UserService {
 
     public UserCreateDto save(UserCreateDto userDto) {
         UserEntity userEntity = UserCreateConverter.toEntity(userDto);
-        userEntity.setActive(true);
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setRoles(new HashSet<>());
         userEntity.getRoles().add(Role.ROLE_USER);
@@ -57,5 +56,11 @@ public class UserService {
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public UserCreateDto assignAdminRole(Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow();
+        user.getRoles().add(Role.ROLE_ADMIN);
+        return UserCreateConverter.toDto(userRepository.save(user));
     }
 }

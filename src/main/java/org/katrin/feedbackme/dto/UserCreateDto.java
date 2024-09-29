@@ -1,9 +1,12 @@
 package org.katrin.feedbackme.dto;
 
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Builder
 @Data
@@ -16,4 +19,5 @@ public class UserCreateDto {
     private String name;
     private String bio;
     private String password;
+    private Set<String> roles;
 }
