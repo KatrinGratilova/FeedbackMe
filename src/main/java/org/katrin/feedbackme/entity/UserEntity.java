@@ -3,6 +3,7 @@ package org.katrin.feedbackme.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,26 +21,29 @@ public class UserEntity {
     @Column(name = "user_id", nullable = false)
     private long id;
 
+    @NotNull
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
 
+    @NotNull
     @Column(nullable = false)
     private String name;
 
+    @Column(length = 300)
     private String bio;
 
-    @Column(nullable = false, length = 1000)
+    @NotNull
+    @Column(nullable = false, length = 100)
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
-
-    private boolean active;
 
     @Column(name = "average_rate")
     private Double avgRating = 0.0;

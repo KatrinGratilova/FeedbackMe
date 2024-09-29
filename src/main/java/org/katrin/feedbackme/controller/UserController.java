@@ -59,10 +59,4 @@ public class UserController {
     public UserCreateDto updateWithoutReviews(@RequestBody UserCreateDto userCreateDto) {
         return userService.updateWithoutReviews(userCreateDto);
     }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable long id) {
-        userService.deleteById(id);
-    }
 }
