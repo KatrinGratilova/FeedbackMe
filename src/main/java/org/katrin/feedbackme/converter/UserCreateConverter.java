@@ -24,6 +24,7 @@ public class UserCreateConverter {
     }
 
     public static UserCreateDto toDto(UserEntity user) {
+        Set<Role> roles = Optional.ofNullable(user.getRoles()).orElse(new HashSet<>());
         return UserCreateDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -31,7 +32,7 @@ public class UserCreateConverter {
                 .name(user.getName())
                 .bio(user.getBio())
                 .password(user.getPassword())
-                .roles(user.getRoles().stream().map(Role::toString).collect(Collectors.toSet()))
+                .roles(roles.stream().map(Role::toString).collect(Collectors.toSet()))
                 .build();
     }
 }

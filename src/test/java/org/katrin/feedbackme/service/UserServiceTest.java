@@ -17,10 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,7 +37,11 @@ public class UserServiceTest {
     @Test
     void saveTest_ok() {
         int id = 1;
-        UserCreateDto userCreateDto = UserCreateDto.builder().id(id).password(passwordEncoder.encode("1")).build();
+        UserCreateDto userCreateDto = UserCreateDto.builder()
+                .id(id)
+                .password(passwordEncoder.encode("1"))
+                .roles(new HashSet<>(Set.of(Role.ROLE_USER.toString())))
+                .build();
         UserEntity userEntity = UserCreateConverter.toEntity(userCreateDto);
 
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
@@ -131,7 +132,11 @@ public class UserServiceTest {
 
     @Test
     void updateWithoutReviewsTest_ok() {
-        UserCreateDto userCreateDto = UserCreateDto.builder().id(1L).name("Katrin").password("1").build();
+        UserCreateDto userCreateDto = UserCreateDto.builder()
+                .id(1L).name("Katrin")
+                .password("1")
+                .roles(new HashSet<>(Set.of(Role.ROLE_USER.toString())))
+                .build();
         UserEntity userEntity = UserCreateConverter.toEntity(userCreateDto);
 
         when(userRepository.updateWithoutReviews(any(UserEntity.class))).thenReturn(userEntity);
